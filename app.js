@@ -4,7 +4,7 @@ var os = require("os");
 var babyNames = require('./babyNames')();
 
 
-var port = 4000;
+var port = 80;
 
 
 app.get('/', function (req, res) {
