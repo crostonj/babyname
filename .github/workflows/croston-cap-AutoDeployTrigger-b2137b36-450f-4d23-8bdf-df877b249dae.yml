@@ -1,0 +1,43 @@
+name: Trigger auto deployment for croston-cap
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - '**'
+    - '.github/workflows/croston-cap-AutoDeployTrigger-b2137b36-450f-4d23-8bdf-df877b249dae.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CROSTONCAP_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.CROSTONCAP_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.CROSTONCAP_REGISTRY_PASSWORD }}
+          containerAppName: croston-cap
+          resourceGroup: rg-croston
+          imageToBuild: crostonj/croston-baby:${{ github.sha }}
+          
+            
+
+     
+
