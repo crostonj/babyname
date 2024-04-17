@@ -1,4 +1,4 @@
-FROM node:argon
+FROM node:lts-alpine3.19
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -11,7 +11,7 @@ RUN npm install
 # Bundle app source
 COPY . /usr/src/app
 
-EXPOSE 80
+EXPOSE 443
 
 
 CMD [ "npm", "start" ]
