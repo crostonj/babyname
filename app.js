@@ -4,7 +4,7 @@ var os = require("os");
 var babyNames = require('./babyNames')();
 
 
-var port = 80;
+var port = 443;
 
 
 app.get('/', function (req, res) {
@@ -13,15 +13,41 @@ app.get('/', function (req, res) {
 });
 
 app.get('/girls', function (req, res) {
-    var rank = req.query["rank"];
-    res.send(babyNames.getGirlName(rank));
+    var rank = req.query['rank'];
+    let girlNames = babyNames.getGirlName(rank);
+
+    // Generate the HTML list items
+    res.send(generateHTML(girlNames)); // Send the HTML 
 });
 
 app.get('/boys', function (req, res) {
     var rank = req.query['rank'];
-    res.send(babyNames.getBoyName(rank));
+    let names = babyNames.getBoyName(rank);
+    res.send(generateHTML(names));
 });
 
 app.listen(port, function (err) {
     console.log('running server on port ' + port);
 });
+
+function generateHTML(Names) {
+    let listItems = Names.map(name => `<li>${name}</li>`).join('');
+
+    // Generate the HTML
+    let html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Names</title>
+        </head>
+        <body>
+            <h1>Names</h1>
+            <ul>
+                ${listItems}
+            </ul>
+        </body>
+        </html>
+    `;
+
+    return html;
+}
