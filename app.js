@@ -17,20 +17,20 @@ app.get('/girls', function (req, res) {
     let girlNames = babyNames.getGirlName(rank);
 
     // Generate the HTML list items
-    res.send(generateHTML(girlNames)); // Send the HTML 
+    res.send(generateHTML("Girls", girlNames)); // Send the HTML 
 });
 
 app.get('/boys', function (req, res) {
     var rank = req.query['rank'];
     let names = babyNames.getBoyName(rank);
-    res.send(generateHTML(names));
+    res.send(generateHTML("Boys", names));
 });
 
 app.listen(port, function (err) {
     console.log('running server on port ' + port);
 });
 
-function generateHTML(Names) {
+function generateHTML(Title, Names) {
     let listItems = Names.map(name => `<li>${name}</li>`).join('');
 
     // Generate the HTML
@@ -38,7 +38,7 @@ function generateHTML(Names) {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Names</title>
+            <title>${Title}</title>
         </head>
         <body>
             <h1>Names</h1>
