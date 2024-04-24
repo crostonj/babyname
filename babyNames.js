@@ -56,7 +56,7 @@ var babyNames = function () {
 
     function getBoyName(rank) {
         //iterate through names and return all names
-        if (rank == undefined)
+        if (rank == undefined || rank == "all")
             return (grep(names, function (p) { return p.sex == 'boy'; }).map(function (p) { return p.name; }));
 
         return grep(names, function (p) { return p.sex == 'boy' && p.rank == rank; })
@@ -65,7 +65,7 @@ var babyNames = function () {
 
     function getGirlName(rank) {
 
-        if (rank == undefined)
+        if (rank == undefined || rank == "all")
             return (grep(names, function (p) { return p.sex == 'girl'; }).map(function (p) { return p.name; }));
 
         return grep(names, function (p) { return p.sex == 'girl' && p.rank == rank; })

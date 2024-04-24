@@ -6,12 +6,45 @@ var babyNames = require('./babyNames')();
 
 var port = 80;
 
-
 app.get('/', function (req, res) {
+    let html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Baby Names</title>
+        </head>
+        <body>
+            <h1>Baby Names</h1>
+            <form action="/girls" method="get">
+                <label for="rank">Rank:</label><br>
+                <select id="rank" name="rank">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="all">All</option>
+                </select><br>
+                <input type="submit" value="Get Top Girl Names">
+            </form>
+            <form action="/boys" method="get">
+                <label for="rank">Rank:</label><br>
+                <select id="rank" name="rank">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="all">All</option>
+                </select><br>
+                <input type="submit" value="Get Top Boy Names">
+            </form>
+        </body>
+        </html>
+    `;
 
-    res.send("Hello World");
+    res.send(html);
 });
-
 app.get('/girls', function (req, res) {
     var rank = req.query['rank'];
     let girlNames = babyNames.getGirlName(rank);
